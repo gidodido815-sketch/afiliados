@@ -10,11 +10,11 @@ export async function autenticar(nombre: string, password: string): Promise<{ no
       WHERE LOWER(username) = LOWER(${nombre.trim()})
     `;
 
-    if (!result || result.rows.length === 0) {
+    if (!result || !result.rows || result.rows.length === 0) {
       return null;
     }
 
-    const u = result.rows[0];
+    const u = result.rows[0] as { username: string; password: string };
 
     if (u.password !== password) {
       return null;
